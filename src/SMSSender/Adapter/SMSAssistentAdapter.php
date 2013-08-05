@@ -7,6 +7,7 @@ namespace SMSSender\Adapter;
 
 use SMSSender\Adapter\AdapterInterface;
 use SMSSender\Entity\Message;
+use SMSSender\Entity\MessageInterface;
 use SMSSender\Exception\RuntimeException;
 use SMSSender\Service\OptionsTrait;
 use Zend\Http\Client;
@@ -19,11 +20,10 @@ class SMSAssistentAdapter implements AdapterInterface, ServiceLocatorAwareInterf
     use ServiceLocatorAwareTrait, OptionsTrait;
 
     /**
-     * @param Message $message
+     * @param MessageInterface $message
      * @throws RuntimeException
-     * @return Message
      */
-    public function send(Message $message)
+    public function send(MessageInterface $message)
     {
         $config = $this->getSenderOptions();
 
@@ -43,18 +43,13 @@ class SMSAssistentAdapter implements AdapterInterface, ServiceLocatorAwareInterf
         try {
             $response = $client->send();
 
-            if (floatval($response->getBody()) > 0) {
-                $message->setSent();
-            } else {
-                $message->setFailed();
-            }
-
         } catch (Client\Exception\RuntimeException $e) {
-            $message->setFailed();
-            throw new RuntimeException("Failed to send sms with ID " . $message->getId(), null, $e);
+            throw new RuntimeException("Failed to send sms", null, $e);
         }
 
-        return $message;
+        if (floatval($response->getBody()) <= 0) {
+            throw new RuntimeException("Failed to send sms");
+        }
 
     }
 

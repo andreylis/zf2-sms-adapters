@@ -5,14 +5,14 @@
 
 namespace SMSSender\Adapter;
 
-use SMSSender\Entity\Message;
+use SMSSender\Entity\MessageInterface;
 
 interface AdapterInterface {
 
     /**
-     * @param Message $message
+     * @param MessageInterface $message
      * @return mixed
      */
-    public function send(Message $message);
+    public function send(MessageInterface $message);
 
 }

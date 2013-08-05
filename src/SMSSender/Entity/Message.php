@@ -9,9 +9,10 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="SMSSender\Repository\MessageRepository")
- * @ORM\Table(name="message")
+ * @ORM\Table(name="sms")
  */
-class Message {
+class Message implements MessageInterface
+{
 
     CONST STATUS_NEW = 0;
     CONST STATUS_SENT = 1;

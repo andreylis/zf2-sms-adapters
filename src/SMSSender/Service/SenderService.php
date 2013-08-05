@@ -1,12 +1,13 @@
 <?php
 /**
- * @author Evgeny Shpilevsky <evgeny@shpilevsky.com>
+ * @author Andrey Lis <me@andreylis.ru>
  */
 
 namespace SMSSender\Service;
 
 use Doctrine\ORM\EntityManager;
 use SMSSender\Entity\Message;
+use SMSSender\Entity\MessageInterface;
 use SMSSender\Exception\RuntimeException;
 use SMSSender\Repository\MessageRepository;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
@@ -42,17 +43,22 @@ class SenderService implements  ServiceLocatorAwareInterface
 
     public function processUnprocessed()
     {
-
-        $adapter = $this->getServiceLocator()->get($this->getSenderOptions()->getProvider());
-
         foreach ($this->getMessageRepository()->loadUnprocessed() as $message) {
-            try {
-                $adapter->send($message);
-            } catch (RuntimeException $e) {
-            }
-
-            $this->getEntityManager()->persist($message);
+            $this->directSend($message);
         }
+    }
+
+    public function directSend(MessageInterface $message)
+    {
+        $adapter = $this->getServiceLocator()->get($this->getSenderOptions()->getProvider());
+        try {
+            $adapter->send($message);
+            $message->setSent();
+        } catch (RuntimeException $e) {
+            $message->setFailed();
+        }
+
+        $this->getEntityManager()->persist($message);
     }
 
     /**
