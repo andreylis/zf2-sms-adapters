@@ -6,29 +6,25 @@
 namespace SMSSender\Service;
 
 use Doctrine\ORM\EntityManager;
-use SMSSender\Adapter\SMSAssistentAdapter;
 use SMSSender\Entity\Message;
+use SMSSender\Exception\RuntimeException;
 use SMSSender\Repository\MessageRepository;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
+use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\ServiceManager;
-use SMSSender\Module as Module;
 
-class MessageService
+class SenderService implements  ServiceLocatorAwareInterface
 {
 
+    use ServiceLocatorAwareTrait, OptionsTrait;
 
     /**
-     * @var ServiceManager
+     * @param ServiceLocatorInterface $serviceLocator
      */
-    protected $serviceManager;
-
-
-    /**
-     * @param \Zend\ServiceManager\ServiceManager $serviceManager
-     * @return \SMSSender\Service\MessageService
-     */
-    public function __construct(ServiceManager $serviceManager)
+    public function __construct(ServiceLocatorInterface $serviceLocator)
     {
-        $this->serviceManager = $serviceManager;
+        $this->serviceLocator = $serviceLocator;
     }
 
     /**
@@ -47,21 +43,15 @@ class MessageService
     public function processUnprocessed()
     {
 
-        $moduleObject=  new Module();
-        $config = $moduleObject->getConfig()['sms'];
+        $adapter = $this->getServiceLocator()->get($this->getSenderOptions()->getProvider());
 
-        switch ($config['provider']) {
-            case "sms-assistent": $adapter = new SMSAssistentAdapter(); break;
-            default: throw new \Exception("Wrong provider name");
-        }
+        foreach ($this->getMessageRepository()->loadUnprocessed() as $message) {
+            try {
+                $adapter->send($message);
+            } catch (RuntimeException $e) {
+            }
 
-        /**
-         * @var $message Message
-         */
-        foreach ($this->getMessageRepository()->loadUnprocessed() as $message) {;
-            $adapter->send($message);
             $this->getEntityManager()->persist($message);
-            $this->getEntityManager()->flush($message);
         }
     }
 
@@ -78,7 +68,7 @@ class MessageService
      */
     public function getEntityManager()
     {
-        return $this->serviceManager->get('entity_manager');
+        return $this->getServiceLocator()->get('entity_manager');
     }
 
 }

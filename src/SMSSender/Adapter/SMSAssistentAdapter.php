@@ -7,6 +7,7 @@ namespace SMSSender\Adapter;
 
 use SMSSender\Adapter\AdapterInterface;
 use SMSSender\Entity\Message;
+use SMSSender\Exception\RuntimeException;
 use SMSSender\Module as Module;
 use Zend\Http\Client;
 use Zend\Http\Client\Adapter\Curl;
@@ -38,12 +39,18 @@ class SMSAssistentAdapter implements AdapterInterface
         $client->setAdapter((new Curl()));
         $client->setUri($queryURL);
 
-        $response = $client->send();
+        try {
+            $response = $client->send();
 
-        if (floatval($response->getBody()) > 0) {
-            $message->setSent();
-        } else {
+            if (floatval($response->getBody()) > 0) {
+                $message->setSent();
+            } else {
+                $message->setFailed();
+            }
+
+        } catch (Client\Exception\RuntimeException $e) {
             $message->setFailed();
+            throw new RuntimeException("Failed to send sms with ID " . $message->getId(), null, $e);
         }
 
         return $message;

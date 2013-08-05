@@ -7,7 +7,7 @@ return array(
 
     'sms' => [
 
-        'provider'  => 'sms-assistent', /** 'sms-assistent' or any other supported provider */
+        'provider'  => 'SMSSenderAssistentAdapter', /** 'sms-assistent' or any other supported provider */
         'username'  => '',
         'password'  => '',
         'sender'    => 'ZF2',           /** this value must be approved by sms-assistent */
@@ -33,4 +33,14 @@ return array(
             'message-index' => 'SMSSender\Controller\IndexController'
         ]
     ],
+    'service_manager' => [
+        'factories' => [
+            'SMSSenderOptions' => 'SMSSender\Service\OptionsFactory',
+            'SMSSenderService' => 'SMSSender\Service\SenderFactory'
+
+        ],
+        'invokables' => [
+            'SMSSenderAssistentAdapter' => 'SMSSender\Adapter\SMSAssistentAdapter'
+        ]
+    ]
 );
