@@ -1,0 +1,25 @@
+{
+    "name": "andreylis/zf2-sms-adapters",
+    "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "Andrey Lis",
+            "email": "me@andreylis.ru"
+        }
+    ],
+    "require": {
+        "zendframework/zend-code":              ">=2.2.1",
+        "zendframework/zend-stdlib":            ">=2.2.1",
+        "zendframework/zend-http":              "*",
+        "zendframework/zend-console":           "*",
+        "zendframework/zend-modulemanager":     "*",
+        "doctrine/doctrine-orm-module":         "~0.7",
+        "doctrine/doctrine-module":             "~0.7",
+        "doctrine/cache":                       "v1.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "SMSSender": "src/"
+        }
+    }
+}
