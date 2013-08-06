@@ -43,8 +43,12 @@ class SenderService implements  ServiceLocatorAwareInterface
 
     public function processUnprocessed()
     {
-        foreach ($this->getMessageRepository()->loadUnprocessed() as $message) {
-            $this->directSend($message);
+        $messages = $this->getMessageRepository()->loadUnprocessed();
+        if (!empty($messages)) {
+            foreach ($messages as $message) {
+                $this->directSend($message);
+                $this->getEntityManager()->persist($message);
+            }
         }
     }
 
@@ -57,8 +61,6 @@ class SenderService implements  ServiceLocatorAwareInterface
         } catch (RuntimeException $e) {
             $message->setFailed();
         }
-
-        $this->getEntityManager()->persist($message);
     }
 
     /**
