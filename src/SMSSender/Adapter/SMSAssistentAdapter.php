@@ -39,6 +39,10 @@ class SMSAssistentAdapter implements AdapterInterface, ServiceLocatorAwareInterf
 
         $client =  new Client();
         $client->setUri($queryURL);
+        $client->setOptions([
+            'sslverifypeer' => false,
+            'sslallowselfsigned' => true
+        ]);
 
         try {
             $response = $client->send();

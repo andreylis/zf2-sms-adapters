@@ -36,7 +36,7 @@ return array(
     'service_manager' => [
         'factories' => [
             'SMSSenderOptions' => 'SMSSender\Service\OptionsFactory',
-            'SMSSenderService' => 'SMSSender\Service\SenderFactory'
+            'SMSSenderService' => 'SMSSender\Service\SenderServiceFactory'
 
         ],
         'invokables' => [
