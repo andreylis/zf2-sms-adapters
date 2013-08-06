@@ -14,7 +14,7 @@ use Zend\Http\Client;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
-class SMSAssistentAdapter implements AdapterInterface, ServiceLocatorAwareInterface
+class SMSCRuAdapter implements AdapterInterface, ServiceLocatorAwareInterface
 {
 
     use ServiceLocatorAwareTrait, OptionsTrait;
@@ -28,14 +28,15 @@ class SMSAssistentAdapter implements AdapterInterface, ServiceLocatorAwareInterf
     {
         $config = $this->getSenderOptions();
 
-        $serviceURL = "https://sys.sms-assistent.ru/api/v1/send_sms/plain?";
+        $serviceURL = "http://smsc.ru/sys/send.php?";
 
         $queryURL = $serviceURL . http_build_query([
-                'user' => $config->getUsername(),
-                'password' => $config->getPassword(),
+                'login' => $config->getUsername(),
+                'psw' => $config->getPassword(),
                 'sender' => $config->getSender(),
-                'recipient' => str_replace(["+", " ", '-'], "", $message->getRecipient()), // на всякий случай
-                'message' => $message->getMessage(),
+                'phones' => str_replace(["+", " ", '-'], "", $message->getRecipient()), // на всякий случай
+                'mes' => $message->getMessage(),
+                'fmt' => 3 // lets use json!
             ]);
 
         $client =  new Client();
@@ -52,7 +53,9 @@ class SMSAssistentAdapter implements AdapterInterface, ServiceLocatorAwareInterf
             throw new RuntimeException("Failed to send sms", null, $e);
         }
 
-        if (floatval($response->getBody()) <= 0) {
+        $responseData = @json_decode($response->getContent());
+
+        if (empty($responseData) OR !isset($responseData->id)) {
             throw new RuntimeException("Failed to send sms");
         }
 
