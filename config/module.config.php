@@ -7,10 +7,10 @@ return array(
 
     'sms' => [
 
-        'provider'  => 'SMSSenderAssistentAdapter', /** 'sms-assistent' or any other supported provider */
+        'provider'  => 'SMSSenderAssistentAdapter', /** or any other supported provider */
         'username'  => '',
         'password'  => '',
-        'sender'    => 'ZF2',           /** this value must be approved by sms-assistent */
+        'sender'    => 'ZF2',                       /** this value must be approved by provider */
 
     ],
 
