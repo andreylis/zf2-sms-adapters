@@ -14,7 +14,7 @@ use Zend\Http\Client;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
-class SMSCRuAdapter implements AdapterInterface, ServiceLocatorAwareInterface
+class SMSRuAdapter implements AdapterInterface, ServiceLocatorAwareInterface
 {
 
     use ServiceLocatorAwareTrait, OptionsTrait;
@@ -33,7 +33,7 @@ class SMSCRuAdapter implements AdapterInterface, ServiceLocatorAwareInterface
         $queryURL = $serviceURL . http_build_query([
                 'login' => $config->getUsername(),
                 'password' => $config->getPassword(),
-                'to' => str_replace(["+", " ", '-'], "", $message->getRecipient()), // на всякий случай
+                'to' => $message->getRecipient(),
                 'from' => $config->getSender(),
                 'text' => $message->getMessage(),
                 'partner_id' => 21871 // please, left this as is
@@ -53,7 +53,7 @@ class SMSCRuAdapter implements AdapterInterface, ServiceLocatorAwareInterface
             throw new RuntimeException("Failed to send sms", null, $e);
         }
 
-        if (empty($responseData) OR trim(current(explode("\n", $responseData))) !== "100") {
+        if (!$response OR trim(current(explode("\n", $response))) !== "100") {
             throw new RuntimeException("Failed to send sms");
         }
 

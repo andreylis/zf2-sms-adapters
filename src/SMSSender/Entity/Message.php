@@ -135,7 +135,7 @@ class Message implements MessageInterface
      */
     public function setRecipient($recipient)
     {
-        $this->recipient = $recipient;
+        $this->recipient = preg_replace('/[^0-9]/', '', $recipient); // international number without pluses
     }
 
     /**

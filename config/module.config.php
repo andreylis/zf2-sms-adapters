@@ -40,7 +40,9 @@ return array(
 
         ],
         'invokables' => [
-            'SMSSenderAssistentAdapter' => 'SMSSender\Adapter\SMSAssistentAdapter'
+            'SMSSenderAssistentAdapter' => 'SMSSender\Adapter\SMSAssistentAdapter',
+            'SMSSenderSMSRuAdapter' => 'SMSSender\Adapter\SMSRuAdapter',
+            'SMSSenderSMSCRuAdapter' => 'SMSSender\Adapter\SMSCRuAdapter'
         ]
     ]
 );

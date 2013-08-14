@@ -34,7 +34,7 @@ class SMSCRuAdapter implements AdapterInterface, ServiceLocatorAwareInterface
                 'login' => $config->getUsername(),
                 'psw' => $config->getPassword(),
                 'sender' => $config->getSender(),
-                'phones' => str_replace(["+", " ", '-'], "", $message->getRecipient()), // на всякий случай
+                'phones' => $message->getRecipient(), 
                 'mes' => $message->getMessage(),
                 'fmt' => 3 // lets use json!
             ]);
