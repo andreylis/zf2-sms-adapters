@@ -15,7 +15,7 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\ServiceManager;
 
-class SenderService implements  ServiceLocatorAwareInterface
+class SenderService implements ServiceLocatorAwareInterface
 {
 
     use ServiceLocatorAwareTrait, OptionsTrait;

@@ -122,11 +122,13 @@ class Message implements MessageInterface
         return $this->status;
     }
 
-    public function setSent() {
+    public function setSent()
+    {
         $this->setStatus(self::STATUS_SENT);
     }
 
-    public function setFailed() {
+    public function setFailed()
+    {
         $this->setStatus(self::STATUS_FAILED);
     }
 
@@ -145,7 +147,6 @@ class Message implements MessageInterface
     {
         return $this->recipient;
     }
-
 
 
 }

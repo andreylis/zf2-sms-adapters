@@ -9,7 +9,8 @@ namespace SMSSender\Service;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class OptionsFactory implements FactoryInterface {
+class OptionsFactory implements FactoryInterface
+{
     /**
      * Create service
      *

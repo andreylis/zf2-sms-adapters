@@ -6,12 +6,15 @@
 namespace SMSSender\Entity;
 
 
-interface MessageInterface {
+interface MessageInterface
+{
 
     public function getRecipient();
+
     public function getMessage();
 
     public function setFailed();
+
     public function setSent();
 
 }

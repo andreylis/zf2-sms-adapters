@@ -39,7 +39,7 @@ class SMSRuAdapter implements AdapterInterface, ServiceLocatorAwareInterface
                 'partner_id' => 21871 // please, left this as is
             ]);
 
-        $client =  new Client();
+        $client = new Client();
         $client->setUri($queryURL);
         $client->setOptions([
             'sslverifypeer' => false,

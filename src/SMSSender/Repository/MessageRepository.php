@@ -8,7 +8,8 @@ namespace SMSSender\Repository;
 use Doctrine\ORM\EntityRepository;
 use SMSSender\Entity\Message;
 
-class MessageRepository extends EntityRepository {
+class MessageRepository extends EntityRepository
+{
 
     /**
      * @return Message

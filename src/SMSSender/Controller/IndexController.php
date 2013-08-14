@@ -8,7 +8,7 @@ namespace SMSSender\Controller;
 use SMSSender\Service\SenderServiceTrait;
 use Zend\Mvc\Controller\AbstractActionController;
 
-class IndexController  extends AbstractActionController
+class IndexController extends AbstractActionController
 {
 
     use SenderServiceTrait;
@@ -32,7 +32,6 @@ class IndexController  extends AbstractActionController
 
         return $this->entityManager;
     }
-
 
 
 }

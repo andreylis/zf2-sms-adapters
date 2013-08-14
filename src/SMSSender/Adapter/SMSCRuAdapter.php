@@ -34,12 +34,12 @@ class SMSCRuAdapter implements AdapterInterface, ServiceLocatorAwareInterface
                 'login' => $config->getUsername(),
                 'psw' => $config->getPassword(),
                 'sender' => $config->getSender(),
-                'phones' => $message->getRecipient(), 
+                'phones' => $message->getRecipient(),
                 'mes' => $message->getMessage(),
                 'fmt' => 3 // lets use json!
             ]);
 
-        $client =  new Client();
+        $client = new Client();
         $client->setUri($queryURL);
         $client->setOptions([
             'sslverifypeer' => false,

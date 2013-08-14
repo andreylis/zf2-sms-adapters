@@ -7,7 +7,8 @@ namespace SMSSender\Adapter;
 
 use SMSSender\Entity\MessageInterface;
 
-interface AdapterInterface {
+interface AdapterInterface
+{
 
     /**
      * @param MessageInterface $message
