@@ -12,7 +12,7 @@ use Zend\ModuleManager\Feature\ServiceProviderInterface;
 use Zend\ServiceManager\ServiceManager;
 
 
-class Module implements ServiceProviderInterface, ConsoleUsageProviderInterface
+class Module implements ConsoleUsageProviderInterface
 {
 
     /**
@@ -38,29 +38,13 @@ class Module implements ServiceProviderInterface, ConsoleUsageProviderInterface
     }
 
     /**
-     * @return array|\Zend\ServiceManager\Config
-     */
-    public function getServiceConfig()
-    {
-        return array(
-            'factories' => array(
-                'SenderService' => function (ServiceManager $sm) {
-                    return new SenderService(
-                        $sm
-                    );
-                }
-            )
-        );
-    }
-
-    /**
      * @param AdapterInterface $console
      * @return array|string|null
      */
     public function getConsoleUsage(AdapterInterface $console)
     {
         return [
-            'send messages' => 'Send messages from queue'
+            'smssender send' => 'Send messages from queue'
         ];
     }
 

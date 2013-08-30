@@ -19,9 +19,9 @@ return array(
             'routes' => array(
                 'send-messages' => array(
                     'options' => array(
-                        'route' => 'send messages',
+                        'route' => 'smssender send',
                         'defaults' => array(
-                            'controller' => 'message-index',
+                            'controller' => 'SMSSender-index',
                             'action' => 'send'
                         )
                     )
@@ -30,7 +30,7 @@ return array(
     ),
     'controllers' => [
         'invokables' => [
-            'message-index' => 'SMSSender\Controller\IndexController'
+            'SMSSender-index' => 'SMSSender\Controller\IndexController'
         ]
     ],
     'service_manager' => [

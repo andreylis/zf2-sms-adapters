@@ -16,4 +16,4 @@ ZF2 module for sending SMSes with queue storage via Doctrine and zf2 console con
     $SMSSender->sendSMS("375297357355", "Hello, Brother");
 
 ### Console command for adding to Cron
-    php public/index.php send messages
+    php public/index.php smssender send

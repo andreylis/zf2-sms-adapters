@@ -34,7 +34,7 @@ class SMSAssistentAdapter implements AdapterInterface, ServiceLocatorAwareInterf
                 'user' => $config->getUsername(),
                 'password' => $config->getPassword(),
                 'sender' => $config->getSender(),
-                'recipient' => $message->getRecipient(),
+                'recipient' => preg_replace('/[^0-9]/', '', $message->getRecipient()),
                 'message' => $message->getMessage(),
             ]);
 
