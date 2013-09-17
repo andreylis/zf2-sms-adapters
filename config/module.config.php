@@ -43,7 +43,8 @@ return array(
             'SMSSenderAssistentUserAreaAdapter' => 'SMSSender\Adapter\SMSAssistentUserAreaAdapter',
             'SMSSenderAssistentAdapter' => 'SMSSender\Adapter\SMSAssistentAdapter', // adapter for old api
             'SMSSenderSMSRuAdapter' => 'SMSSender\Adapter\SMSRuAdapter',
-            'SMSSenderSMSCRuAdapter' => 'SMSSender\Adapter\SMSCRuAdapter'
+            'SMSSenderSMSCRuAdapter' => 'SMSSender\Adapter\SMSCRuAdapter',
+            'SMSSenderLetsAdsAdapter' => 'SMSSender\Adapter\LetsAdsAdapter'
         ]
     ]
 );
