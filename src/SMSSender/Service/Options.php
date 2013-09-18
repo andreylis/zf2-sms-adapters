@@ -20,6 +20,13 @@ class Options extends AbstractOptions
     protected $sender;
 
     /**
+     * Enable default entity
+     *
+     * @var bool
+     */
+    protected $enableEntity = false;
+
+    /**
      * @param mixed $password
      */
     public function setPassword($password)
@@ -81,6 +88,22 @@ class Options extends AbstractOptions
     public function getUsername()
     {
         return $this->username;
+    }
+
+    /**
+     * @param boolean $enableEntity
+     */
+    public function setEnableEntity($enableEntity)
+    {
+        $this->enableEntity = $enableEntity;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getEnableEntity()
+    {
+        return $this->enableEntity;
     }
 
 

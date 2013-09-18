@@ -5,15 +5,42 @@
 
 namespace SMSSender;
 
-use SMSSender\Service\SenderService;
+
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
+use SMSSender\Service\Options;
 use Zend\Console\Adapter\AdapterInterface;
+use Zend\EventManager\EventInterface;
+use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\ConsoleUsageProviderInterface;
-use Zend\ModuleManager\Feature\ServiceProviderInterface;
+use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\ServiceManager;
 
-
-class Module implements ConsoleUsageProviderInterface
+class Module implements ConsoleUsageProviderInterface, BootstrapListenerInterface
 {
+
+    /**
+     * @param EventInterface|MvcEvent $e
+     * @return void
+     */
+    public function onBootstrap(EventInterface $e)
+    {
+        $app     = $e->getParam('application');
+        /** @var ServiceManager $sm */
+        $sm      = $app->getServiceManager();
+        /** @var Options $options */
+        $options = $sm->get('SMSSenderOptions');
+
+        // Add the default entity driver only if specified in configuration
+        if ($options->getEnableEntity()) {
+            $chain = $sm->get('doctrine.driver.orm_default');
+
+            $driver = new AnnotationDriver(new AnnotationReader());
+            $driver->addPaths(__DIR__ . "/Entity");
+            
+            $chain->addDriver($driver, 'SMSSender\Entity');
+        }
+    }
 
     /**
      * @return array|mixed|\Traversable
