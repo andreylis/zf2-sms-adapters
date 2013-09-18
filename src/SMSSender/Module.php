@@ -36,8 +36,8 @@ class Module implements ConsoleUsageProviderInterface, BootstrapListenerInterfac
             $chain = $sm->get('doctrine.driver.orm_default');
 
             $driver = new AnnotationDriver(new AnnotationReader());
-            $driver->addPaths(__DIR__ . "/Entity");
-            
+            $driver->addPaths(array(__DIR__ . "/Entity"));
+
             $chain->addDriver($driver, 'SMSSender\Entity');
         }
     }
