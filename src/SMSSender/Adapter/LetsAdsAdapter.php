@@ -21,7 +21,7 @@ class LetsAdsAdapter implements AdapterInterface, ServiceLocatorAwareInterface
     use ServiceLocatorAwareTrait, OptionsTrait;
 
     /**
-     * @param MessageInterface $message
+     * @param MessageInterface|Message $message
      * @return mixed|void
      * @throws RuntimeException
      */
@@ -31,23 +31,21 @@ class LetsAdsAdapter implements AdapterInterface, ServiceLocatorAwareInterface
 
         $serviceURL = "http://letsads.com/api";
 
-        $xml = "<?" . "xml version='1.0' encoding='UTF-8'" . "?>
-        <request>
-            <auth>
-                <login>{$config->getUsername()}</login>
-                <password>{$config->getPassword()}</password>
-            </auth>
-            <message>
-                <from>{$config->getSender()}</from>
-                <text>{$message->getMessage()}</text>
-                <recipient>{$message->getRecipient()}</recipient>
-            </message>
-        </request>";
+        $body = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><request></request>');
+
+        $auth = $body->addChild('auth');
+        $auth->addChild('login', $config->getUsername());
+        $auth->addChild('password', $config->getPassword());
+
+        $messageXML = $body->addChild('message');
+        $messageXML->addChild('from', $config->getSender());
+        $messageXML->addChild('text', $message->getMessage());
+        $messageXML->addChild('recipient', $message->getRecipient());
 
         $client = new Client();
         $client->setMethod(Request::METHOD_POST);
         $client->setUri($serviceURL);
-        $client->setRawBody($xml);
+        $client->setRawBody($body->asXML());
         $client->setOptions([
             'sslverifypeer' => false,
             'sslallowselfsigned' => true
@@ -55,15 +53,19 @@ class LetsAdsAdapter implements AdapterInterface, ServiceLocatorAwareInterface
 
         try {
             $response = $client->send();
-
         } catch (Client\Exception\RuntimeException $e) {
             throw new RuntimeException("Failed to send sms", null, $e);
         }
 
-        if (!$response OR strstr($response, "<name>Error</name>")) {
-            throw new RuntimeException("Failed to send sms");
+        try {
+            $responseXML = new \SimpleXMLElement($response->getBody());
+        } catch (\Exception $e) {
+            throw new RuntimeException("Cannot parse response", null, $e);
         }
 
+        if ($responseXML->name === 'error') {
+            throw new RuntimeException("LetsAds return error (" . $responseXML->description . ')');
+        }
     }
 
 }
