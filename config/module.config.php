@@ -42,6 +42,7 @@ return array(
         'invokables' => [
             'SMSSenderAssistentUserAreaAdapter' => 'SMSSender\Adapter\SMSAssistentUserAreaAdapter',
             'SMSSenderAssistentAdapter' => 'SMSSender\Adapter\SMSAssistentAdapter', // adapter for old api
+            'SMSSenderWebSMSRuAdapter' => 'SMSSender\Adapter\WebSMSRuAdapter',
             'SMSSenderSMSRuAdapter' => 'SMSSender\Adapter\SMSRuAdapter',
             'SMSSenderSMSCRuAdapter' => 'SMSSender\Adapter\SMSCRuAdapter',
             'SMSSenderLetsAdsAdapter' => 'SMSSender\Adapter\LetsAdsAdapter'
