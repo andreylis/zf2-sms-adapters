@@ -33,7 +33,7 @@ class SenderService implements ServiceLocatorAwareInterface
      * @param $text string
      * @param bool $useStorage
      */
-    public function sendSMS($phone, $text, $useStorage = false)
+    public function sendSMS($phone, $text, $useStorage = true)
     {
         $message = new Message();
         $message->setMessage($text);
