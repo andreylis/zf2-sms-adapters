@@ -31,13 +31,19 @@ class SenderService implements ServiceLocatorAwareInterface
     /**
      * @param $phone string
      * @param $text string
+     * @param bool $useStorage
      */
-    public function sendSMS($phone, $text)
+    public function sendSMS($phone, $text, $useStorage = false)
     {
-        $message = $this->getMessageRepository()->factorySMS();
+        $message = new Message();
         $message->setMessage($text);
         $message->setRecipient($phone);
-        $this->getMessageRepository()->sendMessage($message);
+
+        if ($useStorage && $this->getSenderOptions()->getEnableEntity()) {
+            $this->getMessageRepository()->sendMessage($message);
+        } else {
+            $this->directSend($message);
+        }
     }
 
 
