@@ -11,7 +11,11 @@ ZF2 module for sending SMSes with queue storage via Doctrine and zf2 console con
         }
     }
 
-### Code sample to add SMS to queue:
+### Code sample for direct sms sending:
+
+    $SMSSender->sendSMS("375297357355", "Hello, Brother", false);
+
+### Code sample for adding SMS to Doctrine queue:
 
     $SMSSender->sendSMS("375297357355", "Hello, Brother");
 
