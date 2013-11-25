@@ -8,8 +8,8 @@ return array(
     'sms' => [
 
         'provider' => 'SMSSenderAssistentUserAreaAdapter', /** or any other supported provider */
-        'username' => '',
-        'password' => '',
+        'username' => '', /** put api username here if provided */
+        'password' => '', /** put a password or API key */
         'sender'   => 'ZF2',/** this value must be approved by provider */
 
     ],
@@ -41,8 +41,9 @@ return array(
         ],
         'invokables' => [
             'SMSSenderAssistentUserAreaAdapter' => 'SMSSender\Adapter\SMSAssistentUserAreaAdapter',
-            'SMSSenderAssistentAdapter' => 'SMSSender\Adapter\SMSAssistentAdapter', // adapter for old api
+            'SMSSenderAssistentAdapter' => 'SMSSender\Adapter\SMSAssistentAdapter', // adapter for old api, will be deprecated
             'SMSSenderWebSMSRuAdapter' => 'SMSSender\Adapter\WebSMSRuAdapter',
+            'SMSSenderWebSMSByAdapter' => 'SMSSender\Adapter\WebSMSByAdapter',
             'SMSSenderSMSRuAdapter' => 'SMSSender\Adapter\SMSRuAdapter',
             'SMSSenderSMSCRuAdapter' => 'SMSSender\Adapter\SMSCRuAdapter',
             'SMSSenderLetsAdsAdapter' => 'SMSSender\Adapter\LetsAdsAdapter'
