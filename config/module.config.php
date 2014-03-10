@@ -46,6 +46,7 @@ return array(
             'SMSSenderWebSMSByAdapter' => 'SMSSender\Adapter\WebSMSByAdapter',
             'SMSSenderSMSRuAdapter' => 'SMSSender\Adapter\SMSRuAdapter',
             'SMSSenderSMSCRuAdapter' => 'SMSSender\Adapter\SMSCRuAdapter',
+            'SMSSenderRocketSMSByAdapter' => 'SMSSender\Adapter\RocketSMSByAdapter',
             'SMSSenderLetsAdsAdapter' => 'SMSSender\Adapter\LetsAdsAdapter'
         ]
     ]
