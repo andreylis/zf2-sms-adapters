@@ -28,6 +28,7 @@ class RocketSMSByAdapter implements AdapterInterface, ServiceLocatorAwareInterfa
     {
         $config = $this->getSenderOptions();
 
+
         $serviceURL = "http://api.rocketsms.by/simple/send?";
 
         $queryURL = $serviceURL . http_build_query([
@@ -46,12 +47,11 @@ class RocketSMSByAdapter implements AdapterInterface, ServiceLocatorAwareInterfa
 
         try {
             $response = $client->send();
-
         } catch (Client\Exception\RuntimeException $e) {
             throw new RuntimeException("Failed to send sms", null, $e);
         }
 
-        $responseData = @json_decode($response->getContent());
+        $responseData = @json_decode($response->getBody());
 
         if (empty($responseData) OR !isset($responseData->id)) {
             throw new RuntimeException("Failed to send sms");
