@@ -17,7 +17,7 @@ class Message implements MessageInterface
     CONST STATUS_NEW = 0;
     CONST STATUS_SENT = 1;
     CONST STATUS_FAILED = 2;
-	CONST STATUS_PRIORITIZED = 4;
+	CONST STATUS_PRIORITIZED = 7;
 
     /**
      * @ORM\Id
