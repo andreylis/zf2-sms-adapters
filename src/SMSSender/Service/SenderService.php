@@ -40,6 +40,9 @@ class SenderService implements ServiceLocatorAwareInterface
         $message->setRecipient($phone);
 
         if ($useStorage && $this->getSenderOptions()->getEnableEntity()) {
+	        if ($message->isPrioritized()) {
+		        $this->directSend($message);
+	        }
             $this->getMessageRepository()->sendMessage($message);
         } else {
             $this->directSend($message);

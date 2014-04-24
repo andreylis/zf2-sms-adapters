@@ -17,6 +17,7 @@ class Message implements MessageInterface
     CONST STATUS_NEW = 0;
     CONST STATUS_SENT = 1;
     CONST STATUS_FAILED = 2;
+	CONST STATUS_PRIORITIZED = 4;
 
     /**
      * @ORM\Id
@@ -147,6 +148,13 @@ class Message implements MessageInterface
     {
         return $this->recipient;
     }
+
+	/**
+	 * @return bool
+	 */
+	public function isPrioritized() {
+		return $this->getStatus() == self::STATUS_PRIORITIZED;
+	}
 
 
 }

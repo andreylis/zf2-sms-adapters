@@ -17,4 +17,6 @@ interface MessageInterface
 
     public function setSent();
 
+	public function isPrioritized();
+
 }

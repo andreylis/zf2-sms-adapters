@@ -36,6 +36,7 @@ class RocketSMSByAdapter implements AdapterInterface, ServiceLocatorAwareInterfa
                 'password' => $config->getPassword(),
                 'phone' => $message->getRecipient(),
                 'text' => $message->getMessage(),
+		        'priority' => $message->isPrioritized()
             ]);
 
         $client = new Client();
